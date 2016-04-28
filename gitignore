@@ -1,6 +1,16 @@
-*.idea
+# exclude IDE files
 .idea
-.idea/
-*node_modules
-*/node_modules
-*/node_modules/
+*.sublime-project
+*.sublime-workspace
+*.project
+
+
+# node modules
+node_modules
+npm-debug.log
+
+# build
+coverage
+
+# source-map
+.map
