@@ -2,5 +2,5 @@
 .idea
 .idea/
 *node_modules
-develop/node_modules
-develop/node_modules/
+*/node_modules
+*/node_modules/
