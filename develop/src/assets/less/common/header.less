@@ -1,0 +1,34 @@
+@charset "utf-8";
+
+.header {
+  height: 70px;
+  border-top: 3px solid @base-color-main;
+  border-bottom: 7px solid #3e3e3e;
+  background-color: #454545;
+  margin-bottom: @box-space;
+}
+
+.logo {
+  .fl();
+  margin-top: 20px;
+}
+
+.nav {
+  .fr();
+  height: 70px;
+  position: relative;
+  li {
+    font-size: @font-size-default;
+    height: 77px;
+    line-height: 77px;
+    width: 120px;
+    .fl();
+    text-align: center;
+    a {
+      color: #fff;
+    }
+  }
+  .active {
+    background-color: @base-color-main;
+  }
+}

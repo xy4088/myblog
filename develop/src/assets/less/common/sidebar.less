@@ -1,0 +1,77 @@
+@space: @box-space;
+.sidebar {
+  width: 380px;
+  margin-left: -380px;
+  float: left;
+  .row {
+    padding: @space*2;
+    background-color: @wrap-bg;
+    margin-bottom: @space;
+  }
+}
+
+.row-title {
+  background: url("/images/divide.png") repeat-x center;
+  background-size: auto 15px;
+  span {
+    display: inline-block;
+    background-color: @wrap-bg;
+    font-size: 18px;
+    border-left: 5px solid @base-color-main;
+    padding-left: @space*2;
+    min-width: 25%;
+  }
+}
+
+.search {
+  input {
+    width: 256px;
+    height: 30px;
+    border: 2px solid @base-color-main;
+    padding: 0 10px;
+    color: @text-color-777;
+  }
+  button {
+    background-color: @base-color-main;
+    color: #fff;
+    width: 60px;
+    height: 34px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.label-list, .blogroll {
+  ul {
+    margin-top: @space*2;
+  }
+  li {
+    width: 50%;
+    .fl();
+    margin-bottom: 10px;
+    span{
+      margin-left: 5px;
+      color: @text-color-999;
+    }
+  }
+}
+
+.recommend, .newest {
+  ul {
+    margin-top: @space*2;
+  }
+  li {
+    margin-bottom: 10px;
+    i {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      background-color: @base-color-main;
+      margin-right: @space;
+      color: #fff;
+    }
+  }
+}

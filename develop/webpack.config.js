@@ -9,8 +9,8 @@ module.exports = {
     //页面入口文件配置;
     entry: {
         css : [
-            'webpack/hot/dev-develop',
-            './src/assets/less/css.less',
+            'webpack/hot/dev-server',
+            './src/assets/less/index.less',
             './src/assets/js/main.js'
         ]
     },
