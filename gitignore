@@ -7,7 +7,7 @@
 
 # node modules
 node_modules
-/node_modules
+develop/node_modules/
 npm-debug.log
 
 # build
