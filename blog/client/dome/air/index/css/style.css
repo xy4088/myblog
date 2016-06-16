@@ -295,13 +295,14 @@
 }
 /*等级选项*/
 .grade-option, .pattern-option, .back-option{
-    flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
+    /*flex-wrap: wrap;*/
+    /*-webkit-flex-wrap: wrap;*/
+    font-size: 0;
 }
 .grade-option a,
 .pattern-option a
 {
-    display: block;
+    display: inline-block;
     width: 33%;
     margin: 0.65rem 0;
     text-align: center;
