@@ -296,6 +296,7 @@
 /*等级选项*/
 .grade-option, .pattern-option, .back-option{
     flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
 }
 .grade-option a,
 .pattern-option a
