@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width,initial-scale=1.0,user-scalable=no'>
+    <meta name="format-detection" content="telephone=no"/>
+    <title>设备</title>
+    <link rel="stylesheet" type="text/css" href="css/public.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/nor/jquery-1.9.1.min.js"></script>
+    <script src="js/nor/jquery.cookie.js"></script>
+    <script src="js/nor/time-option.js"></script>
+    <script src="js/nor/consts.js"></script>
+    <script src="js/nor/index.js"></script>
+    <script src="js/h5.js"></script>
+
+    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.2/??flexible_css.js,flexible.js"></script>
+
+
+
+</head>
+<body>
+<div id="wrapper" class="wrapper">
+    <section class="content">
+        <div class="data-wrap">
+            <p class="title">智能空气净化器</p>
+            <div class="chart">
+                <div class="circle-item right">
+                    <div class="circleProgress rightcircle"></div>
+                </div>
+                <div class="circle-item left">
+                    <div class="circleProgress leftcircle"></div>
+                </div>
+                <div class="pm-num-wrap">
+                    <div class="pm-num-ctrl">
+                        <span>PM2.5</span>
+                        <img src="img/ray.png">
+                    </div>
+                </div>
+                <div id="air-quality-num" class="air-quality-num">78</div>
+                <p class="air-quality-unit">ug/m<sup>3</sup></p>
+            </div>
+            <div class="air-level">
+                <div class="level-describe one">室内空气：优</div>
+                <div class="level-describe two">室内空气：良</div>
+                <div class="level-describe three">室内空气：轻度污染</div>
+                <div class="level-describe four">室内空气：中度污染</div>
+                <div class="level-describe five">室内空气：严重污染</div>
+                <div class="level-describe six">室内空气：重度污染</div>
+                <div class="gear-level">
+                    <span class="one"></span>
+                    <span class="two"></span>
+                    <span class="three"></span>
+                    <span class="four"></span>
+                    <span class="five"></span>
+                    <span class="six"></span>
+                </div>
+            </div>
+            <div class="flex-box temperature-info">
+                <div class="temperature-diff flex-num">
+                    <div class="flex-left">
+                        <p class="info">请开窗</p>
+                        <p class="depict">室外空气优于室内</p>
+                    </div>
+                </div>
+                <div class="temperature">
+                    <p class="info"><span><i id="current-temp"></i><sup>o</sup>C</span> | <span id="room-temp">30</span></p>
+                    <p class="depict"><span>温度</span> | <span>湿度</span></p>
+                </div>
+            </div>
+
+            <!--wifi控制和时间-->
+            <div class="wifi-or-time">
+                <p id="wifi-on" class="wifi-ctrl on">已连接</p>
+                <p id="wifi-off" class="wifi-ctrl off">未连接</p>
+                <p id="time_on" class="time-ctrl on">0:0</p>
+                <p id="time_off" class="time-ctrl off">未设置</p>
+            </div>
+        </div>
+
+        <!--风速档位-->
+        <div id="grade_wrap" class="grade-wrap">
+            <div class="flex-box grade-option">
+                <a href="javascript:;" data-directive="adjustfengsu1" class="grade-item switch-handler active" style="text-decoration: none;">
+                    <div class="tab-icon first-gear"></div>
+                    <p class="label">一档</p>
+                </a>
+                <a href="javascript:;" data-directive="adjustfengsu2" class="grade-item switch-handler" style="text-decoration: none;">
+                    <div class="tab-icon second-gear"></div>
+                    <p class="label">二档</p>
+                </a>
+                <a href="javascript:;" data-directive="adjustfengsu3" class="grade-item switch-handler" style="text-decoration: none;">
+                    <div class="tab-icon third-gear"></div>
+                    <p class="label">三档</p>
+                </a>
+                <a href="javascript:;" data-directive="adjustfengsu4" class="grade-item switch-handler" style="text-decoration: none;">
+                    <div class="tab-icon four-gear"></div>
+                    <p class="label">四档</p>
+                </a>
+                <a href="javascript:;" data-directive="adjustfengsu0" class="grade-item switch-handler" style="text-decoration: none;">
+                    <div class="tab-icon accord-gear"></div>
+                    <p class="label">自动</p>
+                </a>
+                <a href="javascript:;" id="more_pattern" class="grade-item" >
+                    <div class="tab-icon more-gear"></div>
+                    <p class="label">更多</p>
+                </a>
+            </div>
+            <div class="close-grade-item">
+                <a href="javascript:;" id="close_grade_btn" class="close-grade-btn off"><i class="icon"></i><label>关闭</label></a>
+            </div>
+        </div>
+
+        <!--模式-->
+        <div id="pattern_wrap" class="pattern-wrap">
+            <div class="flex-box pattern-option">
+                <a href="javascript:;" data-close="closetongsuo" data-open="opentongsuo" class="pattern-item">
+                    <div id="qizhen_lock" class="tab-icon qizhen_lock_off"></div>
+                </a>
+                <a href="javascript:;" data-close="closesleep" data-open="opensleep" class="pattern-item">
+                    <div id="xinfeng_sleep" class="tab-icon xinfeng_sleep_off"></div>
+                </a>
+                <a href="javascript:;" data-close="closefulizi" data-open="openfulizi" class="pattern-item">
+                    <div id="qizhen_negative" class="tab-icon qizhen_negative_off"></div>
+                </a>
+                <a href="javascript:;" data-close="closeshajun" data-open="openshajun" class="pattern-item">
+                    <div id="qizhen_shajun" class="tab-icon qizhen_shajun_off"></div>
+                </a>
+                <a href="javascript:;" data-close="closefengye" data-open="openfengye" class="pattern-item">
+                    <div id="qizhen_fan" class="tab-icon qizhen_fan_off"></div>
+                </a>
+                <a href="javascript:;" data-close="closedengdai" data-open="opendengdai" class="pattern-item">
+                    <div id="qizhen_light" class="tab-icon qizhen_light_off"></div>
+                </a>
+            </div>
+            <div class="flex-box back-option">
+                <a href="javascript:;">
+                    <div id="back_grade" class="tab-icon on"></div>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!--底部工具-->
+<footer class="tabbar flex-box">
+    <a href="javascript:;" id="open_time_bar" class="tab-item">
+        <div class="tab-icon timing"></div>
+    </a>
+    <a href="javascript:;" class="tab-item active">
+        <div class="tab-icon ctrl"></div>
+    </a>
+    <a href="javascript:;" class="tab-item">
+        <div class="tab-icon filter"></div>
+    </a>
+    <a href="javascript:;" class="tab-item">
+        <div class="tab-icon data"></div>
+    </a>
+</footer>
+
+<!--时间选择-->
+<div class="region-picker-wrapper visibility-control" id="region-picker">
+    <div class="header">
+        <div class="bar bar-header">
+            <div class="flex-num"></div>
+            <button class="button button-clear button-positive" id="selectClear">清除</button>
+            <button class="button button-clear button-positive" id="selectFinish">完成</button>
+        </div>
+    </div>
+    <div class="body">
+        <div class="select-zone top"></div>
+        <div class="select-zone middle"></div>
+        <div class="select-zone bottom"></div>
+        <div class="region-picker">
+            <div id="provincePicker"></div>
+        </div>
+        <div class="region-picker">
+            <div id="cityPicker"></div>
+        </div>
+        <div class="region-picker">
+            <div id="areaPicker"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
