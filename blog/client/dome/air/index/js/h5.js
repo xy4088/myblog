@@ -51,8 +51,8 @@
             var classStr = $(this).attr("class");
             var directive = $(this).attr("data-directive");
             if(classStr.indexOf("active") == -1){
+                $(".grade-option .switch-handler").removeClass("active");
                 $(this).addClass("active");
-                $(this).siblings(".active").removeClass("active");
                 sendCommand(directive);
             }
         });
