@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CreateJS export from canvas1</title>
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	html,body {
+		height: 100%;
+	}
+	body {
+		overflow: hidden;
+	}
+	canvas {
+		width: 100%;
+	}
+	#text {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		-webkit-transform: translate(-50%, -50%) scale(0);
+		-moz-transform: translate(-50%, -50%) scale(0);
+		-ms-transform: translate(-50%, -50%) scale(0);
+		-o-transform: translate(-50%, -50%) scale(0);
+		transform: translate(-50%, -50%) scale(0);
+		-webkit-transition: all 1s linear;
+		-moz-transition: all 1s linear;
+		-ms-transition: all 1s linear;
+		-o-transition: all 1s linear;
+		transition: all 1s linear;
+	}
+	#text.text {
+		-webkit-transform: translate(-50%, -50%) scale(1);
+		-moz-transform: translate(-50%, -50%) scale(1);
+		-ms-transform: translate(-50%, -50%) scale(1);
+		-o-transform: translate(-50%, -50%) scale(1);
+		transform: translate(-50%, -50%) scale(1);
+	}
+</style>
+<script src="gameE.js"></script>
+<script src="http://code.createjs.com/soundjs-0.4.0.min.js"></script>
+<script src="canvas1.js"></script>
+
+<script>
+var canvas, stage, exportRoot, textShowFlag, textDom;
+
+function init() {
+	canvas = document.getElementById("canvas");
+	images = images||{};
+	textShowFlag = true;
+	textDom = document.getElementById('text');
+
+	var manifest = [
+		{src:"images/bg.jpg", id:"bg"},
+		{src:"images/Bitmap1.png", id:"Bitmap1"},
+		{src:"images/Bitmap2.png", id:"Bitmap2"},
+		{src:"images/button.png", id:"button"},
+		{src:"images/text.png", id:"text"}
+//		{src:"sounds/streamsound6.mp3", id:"streamsound6"}
+	];
+
+	var loader = new createjs.LoadQueue(false);
+	loader.installPlugin(createjs.Sound);
+	loader.addEventListener("fileload", handleFileLoad);
+	loader.addEventListener("complete", handleComplete);
+	loader.loadManifest(manifest);
+}
+
+function handleFileLoad(evt) {
+	if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+}
+
+function handleComplete() {
+
+	exportRoot = new lib.canvas1();
+	stage = new createjs.Stage(canvas);
+	stage.addChild(exportRoot);
+	exportRoot.run.yanhua.gotoAndStop(0);
+	exportRoot.xinfeng.gotoAndStop(0);
+	exportRoot.xinfeng.loop = false;
+	exportRoot.textSprite.gotoAndStop(0);
+	exportRoot.textSprite.loop = false;
+	exportRoot.run.bp.gotoAndStop(120);
+	exportRoot.run.bp1.gotoAndStop(120);
+
+	createjs.Ticker.setFPS(24);
+	createjs.Ticker.addEventListener("tick", stage);
+	stage.update();
+	exportRoot.start.addEventListener("click", start);
+}
+
+function playSound(id, loop) {
+//	createjs.Sound.play(id, createjs.Sound.INTERRUPT_EARLY, 0, 0, loop);
+}
+function start() {
+	exportRoot.removeChild(exportRoot.start);
+	exportRoot.xinfeng.gotoAndPlay(0);
+	stage.addEventListener("tick", gameLoop);
+}
+
+function gameLoop(){
+	if(exportRoot.xinfeng.currentFrame == 37) {
+		exportRoot.run.bp.gotoAndPlay(0);
+		exportRoot.run.bp1.gotoAndPlay(0);
+	}
+	if(exportRoot.run.bp.currentFrame == 30) {
+		textDom.setAttribute('class', 'text');
+	}
+}
+</script>
+</head>
+
+<body onload="init();">
+	<canvas id="canvas" width="1920" height="1080"></canvas>
+<div id="text">
+	<img src="images/text.png">
+</div>
+</body>
+</html>
