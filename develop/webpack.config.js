@@ -8,9 +8,9 @@ module.exports = {
     //plugins: [commonsPlugin],
     //页面入口文件配置;
     entry: {
-        css : [
+        css : './src/assets/less/index.less',
+        bundle: [
             'webpack/hot/dev-server',
-            './src/assets/less/index.less',
             './src/assets/js/main.js'
         ]
     },
