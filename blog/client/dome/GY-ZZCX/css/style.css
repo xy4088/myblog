@@ -73,6 +73,8 @@ ul,li,ol{
 }
 .index-box{
     padding: 0 15px;
+    background: url("../images/index-bg.png") no-repeat;
+    background-size: 100% 100%;
 }
 .header{
     padding: 27px 20px;
