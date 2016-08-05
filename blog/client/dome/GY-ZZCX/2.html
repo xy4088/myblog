@@ -10,6 +10,7 @@
         var brWidth = document.documentElement.clientWidth;
         var brHeight = document.documentElement.clientHeight;
         brWidth = brWidth>640?640:brWidth;
+        alert(brWidth);
         var size=brWidth/320*16;
         document.getElementsByTagName("html")[0].style.fontSize=size+"px";
         document.getElementsByTagName("html")[0].style.height=brHeight+"px";
@@ -40,7 +41,7 @@
     <div class="section">
         <div class="prompt">
             <i class="p_left"></i>
-            <div class="text"><i class="prompt-icon"></i>此用户为目标用户</div>
+            <div class="text"><i class="prompt-icon"></i><span>此用户为目标用户</span></div>
         </div>
         <div class="package flex-box center">
             <div class="flex-num1">
