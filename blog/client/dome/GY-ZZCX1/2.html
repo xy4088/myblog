@@ -10,6 +10,7 @@
         var brWidth = document.documentElement.clientWidth;
         var brHeight = document.documentElement.clientHeight;
         brWidth = brWidth>640?640:brWidth;
+        alert(brWidth);
         var size=brWidth/320*16;
         document.getElementsByTagName("html")[0].style.fontSize=size+"px";
         document.getElementsByTagName("html")[0].style.height=brHeight+"px";
