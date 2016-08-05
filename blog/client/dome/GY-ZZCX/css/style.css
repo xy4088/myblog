@@ -72,8 +72,6 @@ ul,li,ol{
     line-height: 1.45;
 }
 .index-box{
-    overflow-y: auto;
-    min-height: 450px;
     padding: 0 15px;
 }
 .header{
