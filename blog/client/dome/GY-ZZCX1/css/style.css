@@ -163,12 +163,13 @@ ul,li,ol{
 .footer {
     text-align: center;
     line-height: 30px;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom:20px;
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*bottom:20px;*/
     color: #fff;
     font-size: 14px;
+    margin-top: 50px;
 }
 .container {
     position: absolute;
