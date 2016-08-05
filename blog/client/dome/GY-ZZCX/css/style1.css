@@ -1,7 +1,7 @@
 body,div,section,canvas,p,h1,h2,h3,h4,h5,h6,ul,li{
     margin: 0;
     padding: 0;
-    font-family: "Microsoft YaHei";
+    font-family: "微软雅黑","Helvetica Neue", Helvetica, Arial, sans-serif;
 
 }
 h1,h2,h3,h4,h5,h6{
@@ -20,7 +20,7 @@ a,img,button,input,textarea,span,i,div{
     border: 0;
     padding: 0;
     margin: 0;
-    font-family: "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-text-size-adjust:none;
 }
 a{
@@ -68,8 +68,8 @@ ul,li,ol{
 }
 .models-txe{
     font-size: 12px;
-    margin-left: 5px;
-    line-height: 1.45;
+    margin-left: 10px;
+    line-height: 1.6;
 }
 .index-box{
     position: absolute;
@@ -120,7 +120,7 @@ ul,li,ol{
 }
 .search-warp .search-btn {
     background-color: #fff;
-    padding: 11px 0;
+    padding: 10px 0;
 }
 .search-warp .search-text input{
     width: 100%;
@@ -148,12 +148,12 @@ ul,li,ol{
     position: absolute;
     top: 0;
     left: 0;
-    bottom: 2.875rem;
+    bottom: 46px;
     right: 0;
     overflow-y: auto;
 }
 .section {
-    background-color: #f4f4f4;
+    background-color: #fafafa;
 }
 
 /*查询结果*/
@@ -181,45 +181,18 @@ ul,li,ol{
     display: inline-block;
     padding: 0 20px;
     text-align: center;
-    background-color: #f4f4f4;
+    background-color: #fafafa;
     margin: 0 auto;
     position: relative;
     z-index: 6;
-    font-size: 1.15rem;
-    vertical-align: middle;
-}
-.prompt .text .prompt-icon{
-    width: 25px;
-    height: 25px;
-    background-image: url("../images/prompt-icon.png");
-    display: inline-block;
-    margin-right: 5px;
-    vertical-align: middle;
 }
 .package{
     background-color: #ffffff;
-    padding: 15px 10px;
+    padding: 15px 20px;
 }
-.package .tc-title{
-    font-size: 0.875rem;
-    font-weight: bold;
+.package div{
     color: #e30173;
-    vertical-align: middle;
-    padding-bottom: 3px;
-}
-.package .tc-main{
-    font-size: 0.875rem;
-}
-.package .tc-icon{
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    background-image: url("../images/tc-icon.png");
-    vertical-align: middle;
-    margin-right: 5px;
-}
-.package .tc_pic{
-    width: 90px;
+    margin-bottom: 10px;
 }
 .package ul li {
     font-size: 14px;
@@ -231,81 +204,26 @@ ul,li,ol{
 }
 
 .models {
+    background-color: #fff;
+    padding: 0 20px 20px 20px;
     margin-top: 20px;
 }
 .models-title{
-    text-align: center;
-    padding: 0 0 15px 0;
+    color: #e30173;
+    padding: 15px 0;
 }
-.models-title .tj-icon{
-    width: 22px;
-    height: 22px;
-    display: inline-block;
-    background-image: url("../images/tj-icon.png");
-    vertical-align: middle;
-    margin-right: 5px;
-}
-.models-title .g-ts{
-    color: #888888;
-    vertical-align: middle;
-}
-.models-title .tjjx{
-    vertical-align: middle;
-    color: #333333;
-    font-size: 1rem;
-    margin-right: 5px;
-}
-
 .models-li{
     font-size: 0;
-    margin-right: -10px;
 }
 .models-li li {
-    display: inline-block;
-    width: 50%;
+    margin: 10px 0;
+    padding: 5px;
+    border: 1px solid #e0e0e0;
 }
-.models-li li .item{
-    background-color: #ffffff;
-    padding: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-.models-li li .item .tj-pic{
-    height: 8.75rem;
-    overflow: hidden;
-}
-.models-li li .item .tj-pic img {
-    width: 100%;
-}
-.models-li li .item .parameter{
-    /*font-size: 0.75rem;*/
-}
-.tj-txe{
-  font-size: 0.625rem;
-}
-.tj-txe .price {
-    text-align: right;
-    /*font-size: .75rem;*/
-}
-.tj-txe .price:first-child {
-    font-size:0.625rem;
-}
-.brand{
-    color: #333333;
-    font-size: 0.875rem;
-}
-.jxcs{
-    color: #888888;
-    font-size: 0.625rem;
-}
-.zdj{
-    color: #888888;
-    font-size:0.625rem;
-}
-.price-s{
-    color:#e30173 ;
-    font-size: 0.75rem;
-    font-weight: bold;
+
+.models-li li .product-pic img{
+    width: 80px;
+    height: 80px;
 }
 .footer-copy{
     font-size: 12px;
