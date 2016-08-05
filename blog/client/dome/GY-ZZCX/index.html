@@ -7,7 +7,7 @@
     <link href="css/style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<div class="index-box">
+<div id="index-box" class="index-box">
     <div class="header flex-box center">
         <img class="logo" src="images/logo.png">
         <div class="qd-icon flex-num1">
@@ -33,7 +33,7 @@
 </div>
 <script>
     var brHeight = document.documentElement.clientHeight;
-    document.body.style.height = brHeight;
+    document.getElementById('index-box').style.height = brHeight;
 </script>
 </body>
 </html>
