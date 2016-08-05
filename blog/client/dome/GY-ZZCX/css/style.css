@@ -253,11 +253,12 @@ ul,li,ol{
 }
 
 .models-li{
-    font-size: 0;
-    margin-right: -10px;
+    /*font-size: 0;*/
+    /*margin-right: -10px;*/
+    flex-wrap: wrap;
 }
 .models-li li {
-    display: inline-block;
+    /*display: inline-block;*/
     width: 50%;
 }
 .models-li li .item{
