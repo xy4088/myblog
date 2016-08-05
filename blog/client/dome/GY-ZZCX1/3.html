@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name='viewport' content='width=device-width,initial-scale=1.0,user-scalable=no'>
+    <!--<meta name='viewport' content='initial-scale=1.0,user-scalable=no'>-->
+    <title>广元移动用户自助查询</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript">
+        var brWidth = document.documentElement.clientWidth;
+        var brHeight = document.documentElement.clientHeight;
+        brWidth = brWidth>640?640:brWidth;
+        var size=brWidth/320*16;
+        document.getElementsByTagName("html")[0].style.fontSize=size+"px";
+        document.getElementsByTagName("html")[0].style.height=brHeight+"px";
+    </script>
+
+</head>
+<body>
+<div class="qd-container">
+    <div class="main-header">
+        <div class="flex-box center">
+            <img class="logo" src="images/logo.png">
+            <div class="qx-icon flex-num1">
+                <i id="qx-chose" class="qx-chose">区县</i>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="qd_item">
+            <p class="flex-box center"><span class="qd-name flex-num1">广元渠道名称</span><span class="qd-area">利州区</span></p>
+            <p class="flex-box center"><span class="qd-num flex-num1">NO：<i>089</i></span><span class="qd-position"><i class="position-icon"></i>121.48 31.22</span></p>
+            <p><span>广元市利州区成都路与北京路丁字路口处</span></p>
+        </div>
+        <div class="qd_item">
+            <p class="flex-box center"><span class="qd-name flex-num1">广元渠道名称</span><span class="qd-area">利州区</span></p>
+            <p class="flex-box center"><span class="qd-num flex-num1">NO：<i>089</i></span><span class="qd-position"><i class="position-icon"></i>121.48 31.22</span></p>
+            <p><span>广元市利州区成都路与北京路丁字路口处</span></p>
+        </div>
+        <div class="qd_item">
+            <p class="flex-box center"><span class="qd-name flex-num1">广元渠道名称</span><span class="qd-area">利州区</span></p>
+            <p class="flex-box center"><span class="qd-num flex-num1">NO：<i>089</i></span><span class="qd-position"><i class="position-icon"></i>121.48 31.22</span></p>
+            <p><span>广元市利州区成都路与北京路丁字路口处</span></p>
+        </div>
+        <div class="qd_item">
+            <p class="flex-box center"><span class="qd-name flex-num1">广元渠道名称</span><span class="qd-area">利州区</span></p>
+            <p class="flex-box center"><span class="qd-num flex-num1">NO：<i>089</i></span><span class="qd-position"><i class="position-icon"></i>121.48 31.22</span></p>
+            <p><span>广元市利州区成都路与北京路丁字路口处</span></p>
+        </div>
+    </div>
+    <div id="mask" class="mask"></div>
+    <div id="chose-tk">
+        <div class="tk-title">请选择区县</div>
+        <ul class="tk-qx">
+            <li class="tk-item" onclick="choseTkHide()">利州区</li>
+            <li class="tk-item" onclick="choseTkHide()">利州区</li>
+            <li class="tk-item" onclick="choseTkHide()">利州区</li>
+            <li class="tk-item" onclick="choseTkHide()">利州区</li>
+            <li class="tk-item" onclick="choseTkHide()">利州区</li>
+            <li class="tk-item" onclick="choseTkHide()">利州区</li>
+            <li class="tk-item" onclick="choseTkHide()">利州区</li>
+            <li class="tk-item" onclick="choseTkHide()">利州区</li>
+            <li class="tk-item" onclick="choseTkHide()">利州区</li>
+            <li class="tk-item" onclick="choseTkHide()">利州区</li>
+        </ul>
+    </div>
+</div>
+<script>
+    var mask = document.getElementById('mask');
+    var choseTk = document.getElementById('chose-tk');
+    var qxChose = document.getElementById('qx-chose');
+
+    function choseTkHide() {
+        mask.style.display = 'none';
+        choseTk.setAttribute('class', '');
+    }
+
+    function choseTkShow() {
+        mask.style.display = 'block';
+        choseTk.setAttribute('class', 'chose-show');
+    }
+
+    qxChose.onclick = function() {
+        choseTkShow();
+    };
+    mask.onclick = function() {
+        choseTkHide();
+    };
+</script>
+</body>
+</html>
