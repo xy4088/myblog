@@ -72,11 +72,7 @@ ul,li,ol{
     line-height: 1.45;
 }
 .index-box{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 0 20px;
+    height: 100%;
 }
 .header{
     padding: 27px 20px;
