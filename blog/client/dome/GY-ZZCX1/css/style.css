@@ -60,6 +60,19 @@ ul,li,ol{
 .clearfix { display:inline-block; }
 
 .index-bg{
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    height: 100%;
+    color: #656565;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: white;
+    overflow: hidden;
+    max-width: 640px;
+    margin: 0 auto;
+    font-size: 16px;
     background: url("../images/index-bg.png") no-repeat;
     background-size: 100% 100%;
 }
@@ -86,8 +99,12 @@ ul,li,ol{
 }
 .index-box{
     padding: 0 15px;
-    position: relative;
-    height: 100%;
+    background: url("../images/index-bg.png") no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 .header{
     padding: 27px 20px;
@@ -149,13 +166,12 @@ ul,li,ol{
 .footer {
     text-align: center;
     line-height: 30px;
-    /*position: absolute;*/
-    /*left: 0;*/
-    /*right: 0;*/
-    /*bottom:20px;*/
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom:20px;
     color: #fff;
     font-size: 14px;
-    margin-top: 50px;
 }
 .container {
     position: absolute;
