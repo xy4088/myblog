@@ -75,6 +75,7 @@ ul,li,ol{
     padding: 0 15px;
     background: url("../images/index-bg.png") no-repeat;
     background-size: 100% 100%;
+    position: relative;
 }
 .header{
     padding: 27px 20px;
@@ -135,7 +136,7 @@ ul,li,ol{
 .footer {
     text-align: center;
     line-height: 30px;
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
     bottom:20px;
