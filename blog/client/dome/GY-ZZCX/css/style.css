@@ -254,7 +254,7 @@ ul,li,ol{
 
 .models-li{
     /*font-size: 0;*/
-    /*margin-right: -10px;*/
+    margin-right: -10px;
     flex-wrap: wrap;
 }
 .models-li li {
