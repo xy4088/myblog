@@ -70,7 +70,7 @@ header("Content-Type:text/html;charset=utf-8");
                 <article class="excerpt cls">
                     <header>
                         <h2>
-                            <a href="http://qrzjml.dongpin.me/home">基于视口单位的网页排版</a>
+                            <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA5MjA0NDQxMA==&scene=124#wechat_redirect">基于视口单位的网页排版</a>
                         </h2>
                         <p>
                             <span class="muted">发布于：2016-03-13 00:00:00</span>
