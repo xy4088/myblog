@@ -70,7 +70,7 @@ header("Content-Type:text/html;charset=utf-8");
                 <article class="excerpt cls">
                     <header>
                         <h2>
-                            <a>基于视口单位的网页排版</a>
+                            <a href="http://qrzjml.dongpin.me/home">基于视口单位的网页排版</a>
                         </h2>
                         <p>
                             <span class="muted">发布于：2016-03-13 00:00:00</span>
