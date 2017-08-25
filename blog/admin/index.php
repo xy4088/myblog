@@ -5,5 +5,5 @@
  * Date: 2016/7/12
  * Time: 16:04
  */
-include_once "login.html";
+include_once "view/login.html";
 ?>

@@ -1,0 +1,111 @@
+body, div, header, section, aside, ul, li, ol {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-size: 14px;
+    font-family: "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+}
+ul, li, ol {
+    list-style-type: none;
+}
+i {
+    font-style: inherit;
+}
+a:hover {
+    cursor: pointer;
+}
+#id {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+/*头部*/
+header.toolbar {
+    height: 60px;
+    background-color: #23bab5;
+    /*background-color: #232b2d;*/
+    position: relative;
+}
+header.toolbar .title {
+    color: #fff;
+    font-size: 25px;
+    padding: 15px 0 0 20px;
+}
+header.toolbar .logout {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: #fff;
+}
+header.toolbar .logout:hover {
+    cursor: pointer;
+}
+
+/*左边部分*/
+aside.nav-bar {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    background-color: #232b2d;
+    color: #80969c;
+}
+
+/*右边内容部分*/
+section.wrapper {
+    position: absolute;
+    right: 0;
+    top: 60px;
+    left: 200px;
+    bottom: 0;
+    background-color: #fff;
+}
+section.wrapper .content {
+    height: calc(100% - 42px);
+    overflow-y: auto;
+}
+
+.nav-tab {
+    height: 40px;
+    border-bottom: 2px solid #232b2d;
+    padding: 0 15px;
+}
+.nav-tab a {
+    float: left;
+    padding: 0 15px;
+    line-height: 40px;
+}
+.nav-tab .active {
+    background-color: #232b2d;
+    color: #fff;
+}
+.nav-tab a i{
+    font-size: 12px;
+    display: inline-block;
+    -webkit-transform: scaleX(1.5);
+    transform: scaleX(1.5);
+    margin-left: 10px;
+}
+
+.one-nav li{
+    line-height: 40px;
+}
+.one-nav > li > a{
+    display: block;
+    line-height: 40px;
+    padding-left: 20px;
+}
+.one-nav > li > a:hover {
+    background-color: #23bab5;
+    color: #fff;
+}
+.one-nav > li > a.active {
+    background-color: #23bab5;
+    color: #fff;
+}

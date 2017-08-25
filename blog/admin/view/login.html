@@ -70,13 +70,24 @@
         e.preventDefault();
         var account = accountDom.value;
         var pwd = passwordDom.value;
+        if(account == '') {
+            accountDom.focus();
+            return ;
+        }
+        if(pwd == '') {
+            passwordDom.focus();
+            return ;
+        }
         ajax({
             'url': '/api/user/',
             'type': 'post',
             'data': {s: 'login', user: account, password: pwd},
-//            's=login&user=' + account + '&password=' + pwd,
             success: function(res) {
-                console.log(res);
+                if(res.code == 0) {
+                    window.location.href = '/model'
+                }else {
+                    alert(res.message);
+                }
             },
             error: function(res) {
                 console.log(res);
@@ -89,7 +100,17 @@
                 type = obj.type ? obj.type : 'get',
                 success = obj.success ? obj.success : function(){},
                 error = obj.error ? obj.error : function(){},
-                async = obj.async ? obj.async : true;
+                async = obj.async ? obj.async : true,
+                data = '';
+        if(obj.data && Object.prototype.toString.call(obj.data) == "[object Object]") {
+            for (var i in obj.data) {
+                console.log(obj.data[i]);
+                data += i + "=" + obj.data[i] + "&";
+            }
+        }else {
+            data = '?' + obj.data;
+        }
+        console.log(data);
         //先声明一个异步请求对象
         var xmlHttpReg = null;
         //如果是IE;
@@ -102,18 +123,14 @@
         //如果实例化成功,就调用open()方法,就开始准备向服务器发送请求
         if (xmlHttpReg != null) {
             if(type == 'get' || type == 'GET') {
-                var data = JSON.stringify(obj.data);
-                console.log(data);
-                xmlHttpReg.open("get", url+data, async);
-                xmlHttpReg.send(null);
-                xmlHttpReg.onreadystatechange = doResult; //设置回调函数
+                xmlHttpReg.open("get", url + data, async);
             }else if(type == 'post' || type == 'POST') {
-                var data = JSON.stringify(obj.data);
-                console.log(data);
+//                var data = JSON.stringify(obj.data);
                 xmlHttpReg.open("post", url, async);
-                xmlHttpReg.send(data);
-                xmlHttpReg.onreadystatechange = doResult; //设置回调函数
             }
+            xmlHttpReg.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlHttpReg.send(data);
+            xmlHttpReg.onreadystatechange = doResult; //设置回调函数
         }
 
         //回调函数
@@ -126,7 +143,7 @@
                 //200代表执行成功;
                 if (xmlHttpReg.status == 200) {
                     //将xmlHttpReg.responseText的值赋给ID为resText的元素;
-                    success(xmlHttpReg.responseText);
+                    success(JSON.parse(xmlHttpReg.responseText));
                 }else {
                     error(xmlHttpReg);
                 }
