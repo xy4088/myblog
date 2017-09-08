@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<!-- xlsx.js (C) 2013-present  SheetJS http://sheetjs.com -->
+<!-- vim: set ts=2: -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>SheetJS Live Demo</title>
+    <style>
+        #drop{
+            border:2px dashed #bbb;
+            -moz-border-radius:5px;
+            -webkit-border-radius:5px;
+            border-radius:5px;
+            padding:25px;
+            text-align:center;
+            font:20pt bold,"Vollkorn";color:#bbb
+        }
+        #b64data{
+            width:100%;
+        }
+        a { text-decoration: none }
+        table {width: 100%;}
+        table td {text-align: center;font-size: 14px;}
+        .flex {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+        }
+        .flex-item {
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+        }
+        .import-wrap {
+            position: relative;
+        }
+        .import-file {
+            width: 100px;
+        }
+        .xlf {
+            position: absolute;
+            width: 125px;
+            height: 100%;
+            right: 0;
+            top: 0;
+            opacity: 0;
+        }
+        .filter {
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+<div id="drop" class="flex import-wrap">
+    <div class="flex-item">Drop a spreadsheet file here to see sheet data</div>
+    <button class="import-file">导入文件</button>
+    <input class="xlf" type="file" name="xlfile" id="xlf" value="导入表" />
+</div>
+
+<div class="filter">
+    <select id="select">
+        <option value="0">全部</option>
+    </select>
+    <button id="monthRank">本月工作时长排名</button>
+</div>
+    <div>
+        <table id="table"></table>
+    </div>
+<script src="./js/shim.js"></script>
+<script src="./js/xls.js"></script>
+<script>
+    /*jshint browser:true */
+    /* eslint-env browser */
+    /* eslint no-use-before-define:0 */
+    /*global Uint8Array, Uint16Array, ArrayBuffer */
+    /*global XLSX */
+    var X = XLS;
+    var XW = {
+        /* worker message */
+        msg: 'xlsx',
+        /* worker scripts */
+        worker: './xlsxworker.js'
+    };
+    var sourceData = null;
+    var data = null;
+    var global_wb;
+
+    var process_wb = (function() {
+        var to_json = function to_json(workbook) {
+            var result = {};
+            workbook.SheetNames.forEach(function(sheetName) {
+                var roa = X.utils.sheet_to_json(workbook.Sheets[sheetName]);
+                if(roa.length) result[sheetName] = roa;
+            });
+            return JSON.stringify(result, 2, 2);
+        };
+
+        return function process_wb(wb) {
+            global_wb = wb;
+            sourceData = JSON.parse(to_json(wb))['Sheet1'];
+            finishingData(sourceData);
+            tableDom(data);
+            selectDom();
+        };
+    })();
+
+    var setfmt = window.setfmt = function setfmt() { if(global_wb) process_wb(global_wb); };
+
+    var b64it = window.b64it = (function() {
+        var tarea = document.getElementById('b64data');
+        return function b64it() {
+            if(typeof console !== 'undefined') console.log("onload", new Date());
+            var wb = X.read(tarea.value, {type:'base64', WTF:false});
+            process_wb(wb);
+        };
+    })();
+
+    var do_file = (function() {
+        var rABS = typeof FileReader !== "undefined" && (FileReader.prototype||{}).readAsBinaryString;
+        var use_worker = typeof Worker !== 'undefined';
+        var xw = function xw(data, cb) {
+            var worker = new Worker(XW.worker);
+            worker.onmessage = function(e) {
+                switch(e.data.t) {
+                    case 'ready': break;
+                    case 'e': console.error(e.data.d); break;
+                    case XW.msg: cb(JSON.parse(e.data.d)); break;
+                }
+            };
+            worker.postMessage({d:data,b:rABS?'binary':'array'});
+        };
+
+        return function do_file(files) {
+            var f = files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                if(typeof console !== 'undefined') console.log("onload", new Date());
+                var data = e.target.result;
+                if(!rABS) data = new Uint8Array(data);
+                if(use_worker) xw(data, process_wb);
+                else process_wb(X.read(data, {type: rABS ? 'binary' : 'array'}));
+            };
+            reader.readAsBinaryString(f)
+        };
+    })();
+
+    (function() {
+        var drop = document.getElementById('drop');
+        if(!drop.addEventListener) return;
+
+        function handleDrop(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            do_file(e.dataTransfer.files);
+        }
+
+        function handleDragover(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'copy';
+        }
+
+        drop.addEventListener('dragenter', handleDragover, false);
+        drop.addEventListener('dragover', handleDragover, false);
+        drop.addEventListener('drop', handleDrop, false);
+    })();
+
+    (function() {
+        var xlf = document.getElementById('xlf');
+        if(!xlf.addEventListener) return;
+        function handleFile(e) { do_file(e.target.files); }
+        xlf.addEventListener('change', handleFile, false);
+    })();
+
+    function time(time) {
+        var dateTime = new Date(time),
+            year = dateTime.getFullYear(),
+            month = dateTime.getMonth()+1 < 10 ? '0'+ (dateTime.getMonth()+1) : dateTime.getMonth()+1,
+            day = dateTime.getDate() < 10 ? '0'+dateTime.getDate() : dateTime.getDate();
+        return {
+            date: year + '-' + month + '-' + day
+        }
+    }
+
+    //组织数据;
+    function finishingData(d) {
+        let o = {};
+        for(var i = 0 ; i < d.length ; i++) {
+            var nameKey = d[i]['姓名'],
+                dateKey = d[i]['日期时间'];
+            if(!o[nameKey]) {
+                o[nameKey] = {};
+                o[nameKey][dateKey] = {list: [], min: '23:59:59', max: '00:00:01', week: d[i]['星期']};
+            }else {
+                if(!o[nameKey][dateKey]) o[nameKey][dateKey] = {list: [], min: '23:59:59', max: '00:00:01', week: d[i]['星期']};
+            }
+            var t = new Date(d[i]['日期时间'] + ' ' +d[i]['时间']),
+                minT = new Date(d[i]['日期时间'] + ' ' +o[nameKey][dateKey].min),
+                maxT = new Date(d[i]['日期时间'] + ' ' +o[nameKey][dateKey].max);
+            if(t - minT < 0) {
+                o[nameKey][dateKey].min = d[i]['时间'];
+            }
+            if(t - maxT > 0) {
+                o[nameKey][dateKey].max = d[i]['时间'];
+            }
+            o[nameKey][dateKey].list.push(d[i]['时间']);
+        }
+        data = o;
+    }
+
+    function tableDom(d) {
+        var str = '<tr><th>姓名</th><th>日期时间</th><th>星期</th><th>上班时间</th><th>下班时间</th><th>工作时长</th></tr>';
+        for(var i in d) {
+            for(var j in d[i]) {
+                var minStyle = '', maxStyle = '';
+                if(new Date(j + ' ' +d[i][j].min) - new Date(j + ' 9:01:00') > 0) {
+                    minStyle = ' style="color: red;"';
+                }
+                if(new Date(j + ' ' +d[i][j].max) - new Date(j + ' 17:30:00') < 0) {
+                    maxStyle = ' style="background-color: yellow;"';
+                }
+                str += '<tr><td>'+i+'</td><td>'+time(j).date+'</td><td>'+d[i][j].week+'</td><td'+minStyle+'>'+d[i][j].min+
+                        '</td><td'+maxStyle+'>'+d[i][j].max+'</td>' +
+                        '<td>'+weekLength(j, d[i][j].min, d[i][j].max)+'</td></tr>';
+            }
+        }
+        document.getElementById('table').innerHTML = str;
+    }
+
+    function selectDom() {
+        var d = data;
+        var selectStr = '<option value="0">全部</option>';
+        for(var i in d) {
+            selectStr += '<option value="'+i+'">'+i+'</option>';
+        }
+        document.getElementById('select').innerHTML = selectStr;
+    }
+
+    function weekLength(date, start, end) {
+        var t = (new Date(date + ' ' +end) - new Date(date + ' ' +start)) / 1000;
+        var h = parseInt(t/3600);
+        var m = parseInt((t - h*3600)/60);
+        var s = parseInt(t - h*3600 - m*60);
+        return h+':'+m+':'+s;
+    }
+
+    document.getElementById('select').onchange = function(e) {
+        var val = e.target.value;
+        var d = {};
+        d[val] = data[val];
+        tableDom(d);
+    };
+
+    document.getElementById('monthRank').onclick = function() {
+        var d = data, str = '<tr><th>排名</th><th>姓名</th><th>月工作时长</th></tr>',
+            arr = [];
+        for(var i in d) {
+            var time = 0;
+            for(var j in d[i]) {
+                time += new Date(j + ' ' +d[i][j].max) - new Date(j + ' ' +d[i][j].min);
+            }
+            arr.push({name: i, time: time});
+        }
+        console.log(arr);
+        arr.sort(by('time'));
+        for(var i = arr.length-1 ; i >= 0 ; i--) {
+            var t = arr[i].time / 1000;
+            var h = parseInt(t/3600);
+            var m = parseInt((t - h*3600)/60);
+            var s = parseInt(t - h*3600 - m*60);
+            str += '<tr><td>'+(arr.length-i)+'</td><td>'+arr[i].name+'</td><td>'+(h+':'+m+':'+s)+'</td></tr>';
+        }
+        document.getElementById('table').innerHTML = str;
+    };
+
+    var by = function(name,minor){
+        return function(o,p){
+            var a,b;
+            if(o && p && typeof o === 'object' && typeof p ==='object'){
+                a = o[name];
+                b = p[name];
+                if(a === b){
+                    return typeof minor === 'function' ? minor(o,p):0;
+                }
+                if(typeof a === typeof b){
+                    return a < b ? -1:1;
+                }
+                return typeof a < typeof b ? -1 : 1;
+            }else{
+                thro("error");
+            }
+        }
+    };
+
+
+
+</script>
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36810333-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+</body>
+</html>
