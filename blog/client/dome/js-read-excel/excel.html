@@ -49,6 +49,18 @@
         .filter {
             padding: 20px 0;
         }
+        select {
+            margin-right: 20px;
+            padding: 5px 10px;
+        }
+        #table1 table{
+            min-width: 350px;
+            border-right: 1px solid;
+        }
+        #table1 table tr:hover {
+            background-color: #999;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -59,14 +71,16 @@
 </div>
 
 <div class="filter">
-    <select id="select">
-        <option value="0">全部</option>
-    </select>
-    <button id="monthRank">本月工作时长排名</button>
+    <div style="display: inline-block;" id="nameSelectWrap"></div>
+    <div style="display: inline-block;" id="weekSelectWrap"></div>
 </div>
-    <div>
+<div class="flex">
+    <div id="table1"></div>
+    <div class="flex-item">
         <table id="table"></table>
     </div>
+</div>
+
 <script src="./js/shim.js"></script>
 <script src="./js/xls.js"></script>
 <script>
@@ -83,7 +97,7 @@
         worker: './xlsxworker.js'
     };
     var sourceData = null;
-    var data = null;
+    var data = null, weekData;
     var global_wb;
 
     var process_wb = (function() {
@@ -101,7 +115,8 @@
             sourceData = JSON.parse(to_json(wb))['Sheet1'];
             finishingData(sourceData);
             tableDom(data);
-            selectDom();
+            selectNameDom();
+            selectWeekDom();
         };
     })();
 
@@ -185,7 +200,7 @@
 
     //组织数据;
     function finishingData(d) {
-        let o = {};
+        let o = {}, weekObj = {};
         for(var i = 0 ; i < d.length ; i++) {
             var nameKey = d[i]['姓名'],
                 dateKey = d[i]['日期时间'];
@@ -205,8 +220,20 @@
                 o[nameKey][dateKey].max = d[i]['时间'];
             }
             o[nameKey][dateKey].list.push(d[i]['时间']);
+
+            var weekNum = getYearWeek(new Date(d[i]['日期时间'] + ' 00:00:01'));
+            if(!weekObj[weekNum]) {
+                weekObj[weekNum] = {};
+                weekObj[weekNum][nameKey] = {};
+            }else {
+                if(!weekObj[weekNum][nameKey]) {
+                    weekObj[weekNum][nameKey] = {};
+                }
+            }
+            weekObj[weekNum][nameKey][dateKey] = o[nameKey][dateKey];
         }
         data = o;
+        weekData = weekObj;
     }
 
     function tableDom(d) {
@@ -220,24 +247,60 @@
                 if(new Date(j + ' ' +d[i][j].max) - new Date(j + ' 17:30:00') < 0) {
                     maxStyle = ' style="background-color: yellow;"';
                 }
+//                console.log(getYearWeek(new Date(j + ' ' +d[i][j].min)));
                 str += '<tr><td>'+i+'</td><td>'+time(j).date+'</td><td>'+d[i][j].week+'</td><td'+minStyle+'>'+d[i][j].min+
                         '</td><td'+maxStyle+'>'+d[i][j].max+'</td>' +
-                        '<td>'+weekLength(j, d[i][j].min, d[i][j].max)+'</td></tr>';
+                        '<td>'+workLength(j, d[i][j].min, d[i][j].max)+'</td></tr>';
             }
         }
         document.getElementById('table').innerHTML = str;
     }
 
-    function selectDom() {
+//    生成用户下拉列表;
+    function selectNameDom() {
         var d = data;
-        var selectStr = '<option value="0">全部</option>';
+        var selectStr = '<select id="nameSelect"><option value="0">全部</option>';
         for(var i in d) {
             selectStr += '<option value="'+i+'">'+i+'</option>';
         }
-        document.getElementById('select').innerHTML = selectStr;
+        selectStr += '</select>';
+        document.getElementById('nameSelectWrap').innerHTML = selectStr;
+        //查看某个人每天的记录;
+        document.getElementById('nameSelect').onchange = function(e) {
+            var val = e.target.value;
+            if(val == 0) {
+                tableDom(data);
+            }else {
+                var d = {};
+                d[val] = data[val];
+                tableDom(d);
+            }
+        };
     }
 
-    function weekLength(date, start, end) {
+    //生成排名的下拉列表;
+    function selectWeekDom() {
+        var d = weekData;
+        var selectStr = '<select id="weekSelect"><option value="-1">请选择...</option><option value="0">整个月排名</option>';
+        for(var i in d) {
+            selectStr += '<option value="'+i+'">第'+i+'周排名</option>';
+        }
+        selectStr += '</select>';
+        document.getElementById('weekSelectWrap').innerHTML = selectStr;
+        document.getElementById('weekSelect').onchange = function(e) {
+            var val = e.target.value;
+            if(val == -1){
+                document.getElementById('table').innerHTML = '<tr><th>请选择</th></tr>';
+            }else if(val == 0) {
+                rank(data);
+            }else {
+                rank(weekData[val], val);
+            }
+        }
+    }
+
+//    工作时长;
+    function workLength(date, start, end) {
         var t = (new Date(date + ' ' +end) - new Date(date + ' ' +start)) / 1000;
         var h = parseInt(t/3600);
         var m = parseInt((t - h*3600)/60);
@@ -245,16 +308,10 @@
         return h+':'+m+':'+s;
     }
 
-    document.getElementById('select').onchange = function(e) {
-        var val = e.target.value;
-        var d = {};
-        d[val] = data[val];
-        tableDom(d);
-    };
-
-    document.getElementById('monthRank').onclick = function() {
-        var d = data, str = '<tr><th>排名</th><th>姓名</th><th>月工作时长</th></tr>',
-            arr = [];
+    //排名;
+    function rank(d, w) {
+        var str = '<table><tr><th>排名</th><th>姓名</th><th>月工作时长</th></tr>',
+                arr = [];
         for(var i in d) {
             var time = 0;
             for(var j in d[i]) {
@@ -262,18 +319,33 @@
             }
             arr.push({name: i, time: time});
         }
-        console.log(arr);
         arr.sort(by('time'));
         for(var i = arr.length-1 ; i >= 0 ; i--) {
             var t = arr[i].time / 1000;
             var h = parseInt(t/3600);
             var m = parseInt((t - h*3600)/60);
             var s = parseInt(t - h*3600 - m*60);
-            str += '<tr><td>'+(arr.length-i)+'</td><td>'+arr[i].name+'</td><td>'+(h+':'+m+':'+s)+'</td></tr>';
+            str += '<tr onClick="userList('+w+', '+"'"+arr[i].name+"'"+')"><td>'+(arr.length-i)+'</td><td>'+arr[i].name+'</td><td>'+(h+':'+m+':'+s)+'</td></tr>';
         }
-        document.getElementById('table').innerHTML = str;
-    };
+        str += '</table>';
+        document.getElementById('table1').innerHTML = str;
+        document.getElementById('table').innerHTML = '';
+    }
 
+//    在排行里显示某个人显示该用户的记录;
+    function userList(w, name) {
+        if(w) {
+            var o = {};
+            o[name] = weekData[w][name];
+            tableDom(o);
+        }else {
+            var d = {};
+            d[val] = data[val];
+            tableDom(d);
+        }
+    }
+
+    //数组排序;
     var by = function(name,minor){
         return function(o,p){
             var a,b;
@@ -293,7 +365,16 @@
         }
     };
 
-
+    //根据时间计算出是哪一周;
+    function getYearWeek(date){
+        var date2=new Date(date.getFullYear(), 0, 1);
+        var day1=date.getDay();
+        if(day1==0) day1=7;
+        var day2=date2.getDay();
+        if(day2==0) day2=7;
+        var d = Math.round((date.getTime() - date2.getTime()+(day2-day1)*(24*60*60*1000)) / 86400000);
+        return Math.ceil(d /7)+1;
+    }
 
 </script>
 <script type="text/javascript">
