@@ -11,6 +11,9 @@ header("Content-Type:text/html;charset=utf-8");
 //print_r($_FILES);
 //print_r($_FILES['file']);
 echo(empty ($_FILES ['file_stu'] ['name']));
+echo($_FILES ['file_stu'] ['tmp_name']);
+echo(explode ( ".", $_FILES ['file_stu'] ['name'] ));
+echo($file_types [count ( $file_types ) - 1]);
 //echo(json_encode($_FILES));
 if(move_uploaded_file($_FILES['file']['tmp_name'],'./uploads/up.xls')){ //上传文件，成功返回true
 //    echo '上传成功';
