@@ -8,8 +8,8 @@
 
 header("Content-Type:text/html;charset=utf-8");;
 //echo(empty ($_FILES ['file_stu'] ['name']));
-//echo(empty($_FILES['file']));
-//echo($_FILES ['file_stu'] ['tmp_name']);
+echo(json_encode($_FILES));
+echo($_FILES ['file_stu'] ['tmp_name']);
 echo(json_encode(explode ( ".", $_FILES ['file_stu'] ['name'])));
 //echo($file_types [count ( $file_types ) - 1]);
 if(move_uploaded_file($_FILES['file']['tmp_name'],'./uploads/up.xls')){ //上传文件，成功返回true
