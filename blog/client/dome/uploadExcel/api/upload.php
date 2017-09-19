@@ -10,7 +10,6 @@ header("Content-Type:text/html;charset=utf-8");;
 include '../Classes/PHPExcel.php';
 include '../Classes/PHPExcel/IOFactory.php';
 //echo(empty ($_FILES ['file_stu'] ['name']));
-echo $_FILES;
 $fileName = $_FILES['xlfile']['name'];
 if($_FILES ['xlfile']['name']){ //上传文件，成功返回true
     $file_types = explode ( ".", $fileName );
@@ -27,7 +26,7 @@ if($_FILES ['xlfile']['name']){ //上传文件，成功返回true
     /*以时间来命名上传的文件*/
     $str = date ( 'Ymdhis' );
     $file_name = $str . "." . $file_type;
-
+    echo $str.'\n'.$file_name;
     /*是否上传成功*/
     if (! copy ( $tmp_file, $savePath . $file_name ))
     {
