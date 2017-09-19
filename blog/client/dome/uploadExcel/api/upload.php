@@ -15,6 +15,7 @@ $fileName = $_FILES['xlfile']['name'];
 $file_types = explode ( ".", $fileName );
 $file_type = $file_types[count( $file_types ) - 1];
 echo json_encode($file_types);
+echo json_encode('      ----       ');
 echo json_encode($file_type);
 if($_FILES ['xlfile']['name']){ //上传文件，成功返回true
     echo '上传成功';
