@@ -8,7 +8,7 @@
 
 header("Content-Type:text/html;charset=utf-8");;
 //echo(empty ($_FILES ['file_stu'] ['name']));
-echo(empty ($_FILES ['file_stu']));
+echo($_FILES ['file_stu']);
 //echo($_FILES ['file_stu'] ['tmp_name']);
 //echo(explode ( ".", $_FILES ['file_stu'] ['name'] ));
 //echo($file_types [count ( $file_types ) - 1]);
