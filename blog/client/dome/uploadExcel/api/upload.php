@@ -13,7 +13,7 @@ include '../Classes/PHPExcel/IOFactory.php';
 echo $_FILES;
 $fileName = $_FILES['xlfile']['name'];
 $file_types = explode ( ".", $fileName );
-echo $file_types;
+echo json_encode($file_types);
 if($_FILES ['xlfile']['name']){ //上传文件，成功返回true
     echo '上传成功';
 } else {
