@@ -7,6 +7,8 @@
  */
 
 header("Content-Type:text/html;charset=utf-8");;
+include '../Classes/PHPExcel.php';
+include '../Classes/PHPExcel/IOFactory.php';
 class ExcelToArrary extends Service{
 
     public function __construct() {
@@ -46,9 +48,6 @@ class ExcelToArrary extends Service{
     }
 
 }
-
-include '../Classes/PHPExcel.php';
-include '../Classes/PHPExcel/IOFactory.php';
 //echo(empty ($_FILES ['file_stu'] ['name']));
 $fileName = $_FILES['xlfile']['name'];
 if($_FILES ['xlfile']['name']){ //上传文件，成功返回true
