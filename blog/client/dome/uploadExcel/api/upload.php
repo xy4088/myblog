@@ -13,7 +13,7 @@ include '../Classes/PHPExcel/IOFactory.php';
 $fileName = $_FILES['xlfile']['name'];
 echo($_FILES ['xlfile']['name']);
 echo(empty($fileName));
-if(empty($fileName)){ //上传文件，成功返回true
+if($_FILES ['xlfile']['name']){ //上传文件，成功返回true
     echo '上传成功';
 } else {
     echo '上传失败';
