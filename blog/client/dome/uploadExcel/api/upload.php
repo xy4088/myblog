@@ -7,8 +7,9 @@
  */
 
 header("Content-Type:text/html;charset=utf-8");;
-include '../Classes/PHPExcel.php';
-include '../Classes/PHPExcel/IOFactory.php';
+//include '../Classes/PHPExcel.php';
+//include '../Classes/PHPExcel/IOFactory.php';
+include 'read.php';
 //echo(empty ($_FILES ['file_stu'] ['name']));
 $fileName = $_FILES['xlfile']['name'];
 if($_FILES ['xlfile']['name']){ //上传文件，成功返回true
