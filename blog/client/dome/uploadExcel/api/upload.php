@@ -10,9 +10,10 @@ header("Content-Type:text/html;charset=utf-8");;
 include '../Classes/PHPExcel.php';
 include '../Classes/PHPExcel/IOFactory.php';
 //echo(empty ($_FILES ['file_stu'] ['name']));
+$fileName = $_FILES ['xlfile'] ['name'];
 echo($_FILES ['xlfile'] ['name']);
-echo($_FILES ['xlfile'] ['name'].empty($_FILES ['xlfile'] ['name']));
-if(empty($_FILES ['xlfile'] ['name'])){ //上传文件，成功返回true
+echo($_FILES ['xlfile'] ['name'].empty($fileName));
+if(empty($fileName)){ //上传文件，成功返回true
     echo '上传成功';
 } else {
     echo '上传失败';
