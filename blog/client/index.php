@@ -13,7 +13,7 @@ header("Content-Type:text/html;charset=utf-8");
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>个人博客</title>
+    <title>个人博客123</title>
     <link rel="stylesheet" href="/Public/css.css">
 </head>
 <body>
