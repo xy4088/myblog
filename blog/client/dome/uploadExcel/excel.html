@@ -68,7 +68,7 @@
     <div class="flex-item">Drop a spreadsheet file here to see sheet data</div>
     <button class="import-file">导入文件</button>
     <input class="xlf" type="file" name="xlfile" id="xlf" value="导入表" />
-    <input type="submit" value="提交">
+    <input type="submit" value="提交" style="position: absolute;left: 0;">
 </form>
 
 <div class="filter">
@@ -90,6 +90,67 @@
     /* eslint no-use-before-define:0 */
     /*global Uint8Array, Uint16Array, ArrayBuffer */
     /*global XLSX */
+    function ajax(obj) {
+        var url = obj.url,
+                type = obj.type ? obj.type : 'get',
+                success = obj.success ? obj.success : function(){},
+                error = obj.error ? obj.error : function(){},
+                async = obj.async ? obj.async : true;
+        //先声明一个异步请求对象
+        var xmlHttpReg = null;
+        //如果是IE;
+        if (window.ActiveXObject) {
+            xmlHttpReg = new ActiveXObject("Microsoft.XMLHTTP");
+        }else if (window.XMLHttpRequest) {
+            xmlHttpReg = new XMLHttpRequest(); //实例化一个xmlHttpReg
+        }
+
+        //如果实例化成功,就调用open()方法,就开始准备向服务器发送请求
+        if (xmlHttpReg != null) {
+            if(type == 'get' || type == 'GET') {
+                var data = obj.data ? '?' + obj.data : '';
+                xmlHttpReg.open("get", url+data, async);
+                xmlHttpReg.send(null);
+                xmlHttpReg.onreadystatechange = doResult; //设置回调函数
+            }else if(type == 'post' || type == 'POST') {
+                var data = obj.data ? obj.data : '';
+                xmlHttpReg.open("post", url, async);
+                xmlHttpReg.send(data);
+                xmlHttpReg.onreadystatechange = doResult; //设置回调函数
+            }
+        }
+
+        //回调函数
+        //一旦readyState的值改变,将会调用这个函数,readyState=4表示完成相应
+
+        //设定函数doResult()
+        function doResult() {
+            //4代表执行完成;
+            if (xmlHttpReg.readyState == 4) {
+                //200代表执行成功;
+                if (xmlHttpReg.status == 200) {
+                    //将xmlHttpReg.responseText的值赋给ID为resText的元素;
+                    success(xmlHttpReg.responseText);
+                }else {
+                    error(xmlHttpReg);
+                }
+            }
+        }
+    }
+
+    ajax({
+        url: 'new-login.css',
+        type: 'get',
+        error: function(res) {
+            ajax({
+                url: '../css/new-login.css',
+                type: 'get',
+                success: function(res) {
+                    $("head").append("<style>"+res+"</style>");
+                }
+            });
+        }
+    });
     var X = XLS;
     var XW = {
         /* worker message */
