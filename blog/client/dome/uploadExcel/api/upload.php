@@ -14,7 +14,7 @@ if ($_FILES['xlfile']) {
     $tmp_file = $_FILES ['xlfile']['name'];
     $file_types = explode ( ".", $_FILES ['xlfile']['name'] );
     $file_type = $file_types [count ( $file_types ) - 1];
-
+    echo $file_type;
     /*判别是不是.xls文件，判别是不是excel文件*/
     if (strtolower($file_type) == "xls") {
         $objReader = \PHPExcel_IOFactory::createReader('Excel5');
