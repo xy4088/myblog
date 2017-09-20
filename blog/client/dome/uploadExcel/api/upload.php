@@ -15,8 +15,6 @@ if ($_FILES['xlfile']) {
     $tmp_file = $_FILES ['xlfile']['tmp_name'];
     $file_types = explode ( ".", $_FILES ['xlfile']['name'] );
     $file_type = $file_types [count ( $file_types ) - 1];
-    echo json_encode($_FILES);
-    echo $tmp_file;
     /*判别是不是.xls文件，判别是不是excel文件*/
     if (strtolower($file_type) != "xlsx" && strtolower($file_type) != "xls") {
         $this->error('不是Excel文件，重新上传');
@@ -27,7 +25,7 @@ if ($_FILES['xlfile']) {
     /*以时间来命名上传的文件*/
     $str = date('Ymdhis');
     $file_name = $str . "." . $file_type;
-    echo $savePath;
+    echo file_exists($savePath);
     echo $file_name;
     move_uploaded_file($tmp_file, $savePath);
     /*是否上传成功*/
