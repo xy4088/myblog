@@ -19,6 +19,7 @@ if ($_FILES['xlfile']) {
     if (strtolower($file_type) == "xls") {
         echo 1;
         $objReader = \PHPExcel_IOFactory::createReader('Excel5');
+        echo $objReader;
     }elseif(strtolower($file_type == 'xlsx')) {
         echo 2;
         $objReader = \PHPExcel_IOFactory::createReader('Excel2007');
