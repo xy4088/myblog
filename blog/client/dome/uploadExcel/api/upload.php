@@ -6,11 +6,11 @@
  * Time: 上午 11:24
  */
 
-header("Content-Type:text/html;charset=utf-8");;
+header("Content-Type:text/html;charset=utf-8");
 //include '../Classes/PHPExcel.php';
 //include '../Classes/PHPExcel/IOFactory.php';
 include 'read.php';
-echo(empty ($_FILES ['xlfile']['name']));
+echo(empty ($_FILES ['xlfile']));
 //$fileName = $_FILES['xlfile']['tmp_name'];
 echo $_FILES['xlfile'];
 if (! empty ( $_FILES ['xlfile'] ['name'] ))
