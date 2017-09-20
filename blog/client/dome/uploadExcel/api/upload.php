@@ -21,11 +21,12 @@ if ($_FILES['xlfile']) {
         $this->error('不是Excel文件，重新上传');
     }
     /*设置上传路径*/
-    $savePath = C('/dome/uploadExcel/Excel/');
+    $savePath = SITE_PATH .'/dome/uploadExcel/Excel/';
 
     /*以时间来命名上传的文件*/
     $str = date('Ymdhis');
     $file_name = $str . "." . $file_type;
+    echo $savePath;
     echo $file_name;
     echo copy($tmp_file, $savePath . $file_name);
     /*是否上传成功*/
