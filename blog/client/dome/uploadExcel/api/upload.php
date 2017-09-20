@@ -9,7 +9,7 @@
 header("Content-Type:text/html;charset=utf-8");
 //include '../Classes/PHPExcel.php';
 //include '../Classes/PHPExcel/IOFactory.php';
-//include 'read.php';
+include 'read.php';
 echo json_encode($_FILES);
 echo $_FILES['xlfile'];
 echo empty ($_FILES['xlfile']);
