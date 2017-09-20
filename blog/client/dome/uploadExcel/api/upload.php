@@ -5,10 +5,10 @@
  * Date: 2017/9/19 0019
  * Time: 上午 11:24
  */
-namespace uploadExcel;
+//namespace uploadExcel;
 header("Content-Type:text/html;charset=utf-8");
-//include '../Classes/PHPExcel.php';
-//include '../Classes/PHPExcel/IOFactory.php';
+include '../Classes/PHPExcel.php';
+include '../Classes/PHPExcel/IOFactory.php';
 //include 'read.php';
 
 if ($_FILES['xlfile']) {
@@ -17,11 +17,28 @@ if ($_FILES['xlfile']) {
     $file_type = $file_types [count ( $file_types ) - 1];
     echo $file_type;
     /*判别是不是.xls文件，判别是不是excel文件*/
+    if (strtolower($file_type) != "xlsx" && strtolower($file_type) != "xls") {
+        $this->error('不是Excel文件，重新上传');
+    }
+    /*设置上传路径*/
+    $savePath = C('/dome/uploadExcel/Excel/');
+
+    /*以时间来命名上传的文件*/
+    $str = date('Ymdhis');
+    $file_name = $str . "." . $file_type;
+
+    /*是否上传成功*/
+    if (!copy($tmp_file, $savePath . $file_name)) {
+        throw new \Exception('上传失败');
+        echo '上传失败';
+    }
+
 
     Vendor("uploadExcel.Classes.PHPExcel");//引入phpexcel类(注意你自己的路径)
     Vendor("uploadExcel.Classes.PHPExcel.IOFactory");
     if (strtolower($file_type) == "xls") {
         Vendor("uploadExcel.Classes.PHPExcel.Reader.Excel5");
+        echo $file_type;
         $objReader = \PHPExcel_IOFactory::createReader('Excel5');
     }elseif(strtolower($file_type == 'xlsx')) {
         Vendor("uploadExcel.Classes.PHPExcel.Reader.Excel2007");
