@@ -22,7 +22,7 @@ if ($_FILES['xlfile']) {
         $this->error('不是Excel文件，重新上传');
     }
     /*设置上传路径*/
-    $savePath = '/dome/uploadExcel/Excel/';
+    $savePath = 'dome/uploadExcel/Excel/';
 
     /*以时间来命名上传的文件*/
     $str = date('Ymdhis');
