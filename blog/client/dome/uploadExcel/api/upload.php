@@ -7,27 +7,23 @@
  */
 
 header("Content-Type:text/html;charset=utf-8");
-//include '../Classes/PHPExcel.php';
-//include '../Classes/PHPExcel/IOFactory.php';
+include '../Classes/PHPExcel.php';
+include '../Classes/PHPExcel/IOFactory.php';
 //include 'read.php';
-echo json_encode($_FILES);
-echo $_FILES['xlfile'];
-echo empty ($_FILES['xlfile']);
-//$fileName = $_FILES['xlfile']['tmp_name'];
-echo $_FILES['xlfile'];
-if (! empty ( $_FILES ['xlfile'] ['name'] ))
-
-{
-    $tmp_file = $_FILES ['xlfile'] ['tmp_name'];
-    $file_types = explode ( ".", $_FILES ['xlfile'] ['name'] );
+if ($_FILES['xlfile']) {
+    $tmp_file = $_FILES ['xlfile']['name'];
+    $file_types = explode ( ".", $_FILES ['xlfile']['name'] );
     $file_type = $file_types [count ( $file_types ) - 1];
 
     /*判别是不是.xls文件，判别是不是excel文件*/
-    if (strtolower ( $file_type ) != "xls")
-    {
-//        $this->error ( '不是Excel文件，重新上传' );
-        throw new \Exception('不是Excel文件，重新上传');
+    if (strtolower($file_type) == "xls") {
+        $objReader = \PHPExcel_IOFactory::createReader('Excel5');
+    }elseif(strtolower($file_type == 'xlsx')) {
+        $objReader = \PHPExcel_IOFactory::createReader('Excel2007');
     }
+    echo 1;
+    echo $objReader;
+//        throw new \Exception('不是Excel文件，重新上传');
 
     /*设置上传路径*/
     $savePath = SITE_PATH . '/public/upfile/Excel/';
