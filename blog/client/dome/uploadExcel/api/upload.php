@@ -5,11 +5,12 @@
  * Date: 2017/9/19 0019
  * Time: 上午 11:24
  */
-
+namespace uploadExcel;
 header("Content-Type:text/html;charset=utf-8");
-include '../Classes/PHPExcel.php';
-include '../Classes/PHPExcel/IOFactory.php';
+//include '../Classes/PHPExcel.php';
+//include '../Classes/PHPExcel/IOFactory.php';
 //include 'read.php';
+
 if ($_FILES['xlfile']) {
     $tmp_file = $_FILES ['xlfile']['name'];
     $file_types = explode ( ".", $_FILES ['xlfile']['name'] );
@@ -17,13 +18,13 @@ if ($_FILES['xlfile']) {
     echo $file_type;
     /*判别是不是.xls文件，判别是不是excel文件*/
 
-    Vendor("Excel.PHPExcel");//引入phpexcel类(注意你自己的路径)
-    Vendor("Excel.PHPExcel.IOFactory");
+    Vendor("uploadExcel.Classes.PHPExcel");//引入phpexcel类(注意你自己的路径)
+    Vendor("uploadExcel.Classes.PHPExcel.IOFactory");
     if (strtolower($file_type) == "xls") {
-        Vendor("Excel.PHPExcel.Reader.Excel5");
+        Vendor("uploadExcel.Classes.PHPExcel.Reader.Excel5");
         $objReader = \PHPExcel_IOFactory::createReader('Excel5');
     }elseif(strtolower($file_type == 'xlsx')) {
-        Vendor("Excel.PHPExcel.Reader.Excel2007");
+        Vendor("uploadExcel.Classes.PHPExcel.Reader.Excel2007");
         $objReader = \PHPExcel_IOFactory::createReader('Excel2007');
     }
 
