@@ -26,9 +26,9 @@ if ($_FILES['xlfile']) {
     $str = date('Ymdhis');
     $file_name = $str . "." . $file_type;
     echo $savePath;
-    echo copy($tmp_file, $file_name);
+    echo copy($tmp_file, $savePath . $file_name);
     /*是否上传成功*/
-    if (!copy($tmp_file, $file_name)) {
+    if (!copy($tmp_file, $savePath . $file_name)) {
         throw new \Exception('上传失败');
         echo '上传失败';
     }
