@@ -26,8 +26,7 @@ if ($_FILES['xlfile']) {
     $str = date('Ymdhis');
     $file_name = $str . "." . $file_type;
     echo file_exists($savePath);
-    echo $file_name;
-    move_uploaded_file($tmp_file, $savePath);
+    echo move_uploaded_file($tmp_file, $savePath);
     /*是否上传成功*/
     if (!move_uploaded_file($tmp_file, $savePath)) {
         throw new \Exception('上传失败');
