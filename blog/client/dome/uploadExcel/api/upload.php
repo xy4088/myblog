@@ -24,7 +24,8 @@ if (! empty ( $_FILES ['xlfile'] ['name'] ))
     /*判别是不是.xls文件，判别是不是excel文件*/
     if (strtolower ( $file_type ) != "xls")
     {
-        $this->error ( '不是Excel文件，重新上传' );
+//        $this->error ( '不是Excel文件，重新上传' );
+        throw new \Exception('不是Excel文件，重新上传');
     }
 
     /*设置上传路径*/
