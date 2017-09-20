@@ -15,7 +15,7 @@ if ($_FILES['xlfile']) {
     $tmp_file = $_FILES ['xlfile']['tmp_name'];
     $file_types = explode ( ".", $_FILES ['xlfile']['name'] );
     $file_type = $file_types [count ( $file_types ) - 1];
-
+    echo $tmp_file;
     /*判别是不是.xls文件，判别是不是excel文件*/
     if (strtolower($file_type) != "xlsx" && strtolower($file_type) != "xls") {
         $this->error('不是Excel文件，重新上传');
