@@ -11,10 +11,15 @@ header("Content-Type:text/html;charset=utf-8");;
 //include '../Classes/PHPExcel/IOFactory.php';
 include 'read.php';
 //echo(empty ($_FILES ['file_stu'] ['name']));
-$fileName = $_FILES['xlfile']['name'];
-if($_FILES ['xlfile']['name']){ //上传文件，成功返回true
-    $file_types = explode ( ".", $fileName );
-    $file_type = $file_types[count( $file_types ) - 1];
+$fileName = $_FILES['xlfile']['tmp_name'];
+echo $fileName;
+if (! empty ( $_FILES ['xlfile'] ['name'] ))
+
+{
+    $tmp_file = $_FILES ['xlfile'] ['tmp_name'];
+    $file_types = explode ( ".", $_FILES ['xlfile'] ['name'] );
+    $file_type = $file_types [count ( $file_types ) - 1];
+
     /*判别是不是.xls文件，判别是不是excel文件*/
     if (strtolower ( $file_type ) != "xls")
     {
@@ -27,9 +32,9 @@ if($_FILES ['xlfile']['name']){ //上传文件，成功返回true
     /*以时间来命名上传的文件*/
     $str = date ( 'Ymdhis' );
     $file_name = $str . "." . $file_type;
-    echo $str.'\n'.$file_name;
+
     /*是否上传成功*/
-    if (!copy ( $tmp_file, $savePath . $file_name ))
+    if (! copy ( $tmp_file, $savePath . $file_name ))
     {
         $this->error ( '上传失败' );
     }
@@ -72,6 +77,4 @@ if($_FILES ['xlfile']['name']){ //上传文件，成功返回true
         }
     }
 
-} else {
-    echo '上传失败';
 }
