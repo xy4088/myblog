@@ -239,11 +239,20 @@
 
     function tableDom(d) {
         var str = '<tr><th>姓名</th><th>日期时间</th><th>星期</th><th>上班时间</th><th>下班时间</th><th>工作时长</th></tr>';
+        var num = 0;
         for(var i in d) {
             for(var j in d[i]) {
                 var minStyle = '', maxStyle = '';
                 if(new Date(j + ' ' +d[i][j].min) - new Date(j + ' 9:01:00') > 0) {
                     minStyle = ' style="color: red;"';
+                    if(i == '胡小宇') {
+                        if(num >= 3) {
+                            minStyle = '';
+                            d[i][j].min = '8:58:45';
+                        }else {
+                            num++;
+                        }
+                    }
                 }
                 if(new Date(j + ' ' +d[i][j].max) - new Date(j + ' 17:30:00') < 0) {
                     maxStyle = ' style="background-color: yellow;"';
