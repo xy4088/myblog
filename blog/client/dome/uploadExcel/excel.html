@@ -268,6 +268,7 @@
         document.getElementById('nameSelectWrap').innerHTML = selectStr;
         //查看某个人每天的记录;
         document.getElementById('nameSelect').onchange = function(e) {
+            document.getElementById('table1').innerHTML = '';
             var val = e.target.value;
             if(val == 0) {
                 tableDom(data);
