@@ -12,7 +12,7 @@ header("Content-Type:text/html;charset=utf-8");;
 include 'read.php';
 //echo(empty ($_FILES ['file_stu'] ['name']));
 $fileName = $_FILES['xlfile']['tmp_name'];
-echo $fileName;
+echo $_FILES['xlfile'];
 if (! empty ( $_FILES ['xlfile'] ['name'] ))
 
 {
