@@ -16,12 +16,13 @@ if ($_FILES['xlfile']) {
     $file_type = $file_types [count ( $file_types ) - 1];
     echo $file_type;
     /*判别是不是.xls文件，判别是不是excel文件*/
+    Vendor("Excel.PHPExcel");//引入phpexcel类(注意你自己的路径)
+    Vendor("Excel.PHPExcel.IOFactory");
     if (strtolower($file_type) == "xls") {
-        echo 1;
+        Vendor("Excel.PHPExcel.Reader.Excel5");
         $objReader = \PHPExcel_IOFactory::createReader('Excel5');
-        echo $objReader;
     }elseif(strtolower($file_type == 'xlsx')) {
-        echo 2;
+        Vendor("Excel.PHPExcel.Reader.Excel2007");
         $objReader = \PHPExcel_IOFactory::createReader('Excel2007');
     }
 
