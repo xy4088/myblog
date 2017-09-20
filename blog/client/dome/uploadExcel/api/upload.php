@@ -12,7 +12,7 @@ include '../Classes/PHPExcel/IOFactory.php';
 //include 'read.php';
 
 if ($_FILES['xlfile']) {
-    $tmp_file = $_FILES ['xlfile']['name'];
+    $tmp_file = $_FILES ['xlfile']['tmp_name'];
     $file_types = explode ( ".", $_FILES ['xlfile']['name'] );
     $file_type = $file_types [count ( $file_types ) - 1];
 
