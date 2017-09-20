@@ -31,7 +31,7 @@ if ($_FILES['xlfile']) {
     echo $file_name;
     echo copy($tmp_file, $savePath . $file_name);
     /*是否上传成功*/
-    if (!copy($tmp_file, $savePath . $file_name)) {
+    if (!move_uploaded_file($tmp_file, $savePath . $file_name)) {
         throw new \Exception('上传失败');
         echo '上传失败';
     }
