@@ -17,11 +17,13 @@ if ($_FILES['xlfile']) {
     echo $file_type;
     /*判别是不是.xls文件，判别是不是excel文件*/
     if (strtolower($file_type) == "xls") {
+        echo 1;
         $objReader = \PHPExcel_IOFactory::createReader('Excel5');
     }elseif(strtolower($file_type == 'xlsx')) {
+        echo 2;
         $objReader = \PHPExcel_IOFactory::createReader('Excel2007');
     }
-    echo 1;
+
     echo $objReader;
 //        throw new \Exception('不是Excel文件，重新上传');
 
